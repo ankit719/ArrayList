@@ -1,0 +1,475 @@
+ 
+#!/bin/bash
+
+1)Check if a given number is even or odd
+check_even_odd() {
+    if (( $1 % 2 == 0 )); then
+        echo "Even"
+    else
+        echo "Odd"
+    fi
+}
+--------------------------------------------
+
+2) Find the factorial of a given number
+calculate_factorial() {
+    fact=1
+    for (( i = 1; i <= $1; i++ )); do
+        fact=$((fact * i))
+    done
+    echo "Factorial of $1 is $fact"
+}
+--------------------------------------------
+3) Determine the largest among three numbers
+find_largest() {
+    max=$1
+    for num in $@; do
+        if ((num > max)); then
+            max=$num
+        fi
+    done
+    echo "The largest number is $max"
+}
+--------------------------------------------
+4)Check if a string is a palindrome
+check_palindrome() {
+    reversed=$(echo "$1" | rev)
+    if [ "$1" = "$reversed" ]; then
+        echo "Palindrome"
+    else
+        echo "Not a palindrome"
+    fi
+}
+--------------------------------------------
+5) Print the Fibonacci sequence up to a specified number of terms
+generate_fibonacci() {
+    a=0
+    b=1
+    echo "Fibonacci Sequence:"
+    for (( i = 0; i < $1; i++ )); do
+        echo -n "$a "
+        fn=$((a + b))
+        a=$b
+        b=$fn
+    done
+    echo
+}
+--------------------------------------------
+6) Check if a number is prime or not
+check_prime() {
+    for (( i = 2; i <= $1 / 2; i++ )); do
+        if (( $1 % i == 0 )); then
+            echo "Not a prime number."
+            return
+        fi
+    done
+    echo "Prime number."
+}
+--------------------------------------------
+7)Calculate and print the multiplication table of a number
+multiplication_table() {
+    echo "Multiplication Table of $1:"
+    for (( i = 1; i <= 10; i++ )); do
+        echo "$1 * $i = $((i * $1))"
+    done
+}
+--------------------------------------------
+8) Find the sum of all even numbers between 1 and N
+sum_of_evens() {
+    sum=0
+    for (( i = 2; i <= $1; i += 2 )); do
+        sum=$((sum + i))
+    done
+    echo "Sum of even numbers between 1 and $1 is $sum"
+}
+--------------------------------------------
+9) Find the sum of all natural numbers from 1 to N
+sum_of_naturals() {
+    sum=$((($1 * ($1 + 1)) / 2))
+    echo "Sum of natural numbers from 1 to $1 is $sum"
+}
+--------------------------------------------
+10) Reverse a given number
+reverse_number() {
+    reversed=$(echo "$1" | rev)
+    echo "Reversed number: $reversed"
+}
+--------------------------------------------
+11) #!/bin/bash
+
+# 11) Check if a file exists in a specified directory.
+check_file_existence() {
+    if [ -e "$1" ]; then
+        echo "File exists in the specified directory."
+    else
+        echo "File does not exist in the specified directory."
+    fi
+}
+--------------------------------------------
+# 12) Calculate the factorial of a number using a while loop.
+calculate_factorial_with_while() {
+    fact=1
+    num=$1
+    while [ $num -gt 0 ]; do
+        fact=$((fact * num))
+        num=$((num - 1))
+    done
+    echo "Factorial of $1 is $fact"
+}
+--------------------------------------------
+# 13) Find the sum of all digits in a number.
+sum_of_digits() {
+    num=$1
+    sum=0
+    while [ $num -gt 0 ]; do
+        digit=$((num % 10))
+        sum=$((sum + digit))
+        num=$((num / 10))
+    done
+    echo "Sum of digits is $sum"
+}
+--------------------------------------------
+# 14) Create a menu-based script using a case statement for different actions.
+menu_script() {
+    echo "Menu Options:"
+    echo "1. Check Even/Odd"
+    echo "2. Calculate Factorial"
+    echo "3. Find Largest"
+    echo "4. Check Palindrome"
+    echo "5. Exit"
+    read choice
+
+    case $choice in
+        1) echo "Enter a number: "
+           read number
+           check_even_odd $number ;;
+        2) echo "Enter a number: "
+           read number
+           calculate_factorial $number ;;
+        3) echo "Enter three numbers: "
+           read num1 num2 num3
+           find_largest $num1 $num2 $num3 ;;
+        4) echo "Enter a string: "
+           read string
+           check_palindrome $string ;;
+        5) echo "Exiting..."
+           exit ;;
+        *) echo "Invalid option selected." ;;
+    esac
+}
+
+--------------------------------------------
+
+
+# 15) Generate a random number and have the user guess it.
+guess_random_number() {
+    secret_number=$((1 + RANDOM % 100))  # Generates a random number between 1 and 100
+
+    while true; do
+        echo "Guess the number (1-100):"
+        read guess
+
+        if [ $guess -eq $secret_number ]; then
+            echo "Congratulations! You guessed the correct number."
+            break
+        elif [ $guess -lt $secret_number ]; then
+            echo "Try a higher number."
+        else
+            echo "Try a lower number."
+        fi
+    done
+}
+-------------------------------------------------------------------
+# 16) Calculate the average and sum of a list of numbers.
+calculate_average_and_sum() {
+    sum=0
+    count=0
+
+    echo "Enter numbers (type 'done' to finish input):"
+    while true; do
+        read num
+        if [ "$num" = "done" ]; then
+            break
+        fi
+        sum=$((sum + num))
+        count=$((count + 1))
+    done
+
+    if [ $count -eq 0 ]; then
+        echo "No numbers entered."
+    else
+        average=$(bc <<< "scale=2; $sum / $count")
+        echo "Sum: $sum"
+        echo "Average: $average"
+    fi
+}
+-------------------------------------------------------------
+# 17) Calculate the exponent of a number using a for loop.
+calculate_exponent() {
+    result=1
+
+    echo "Enter base:"
+    read base
+    echo "Enter exponent:"
+    read exponent
+
+    for ((i = 1; i <= exponent; i++)); do
+        result=$((result * base))
+    done
+
+    echo "$base^$exponent = $result"
+}
+-------------------------------------------------------------------
+# 18) Check if a given year is a leap year.
+check_leap_year() {
+    echo "Enter a year:"
+    read year
+
+    if ((year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))); then
+        echo "$year is a leap year."
+    else
+        echo "$year is not a leap year."
+    fi
+}
+-------------------------------------------------------------------
+# 19) Validate a string as a valid email address.
+validate_email() {
+    echo "Enter an email address:"
+    read email
+
+    if [[ "$email" =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
+        echo "$email is a valid email address."
+    else
+        echo "$email is not a valid email address."
+    fi
+}
+
+# Execute the respective function based on user input
+echo "Enter the task number you want to perform (15-19): "
+read task
+
+case $task in
+    15) guess_random_number ;;
+    16) calculate_average_and_sum ;;
+    17) calculate_exponent ;;
+    18) check_leap_year ;;
+    19) validate_email ;;
+    *) echo "Invalid option selected." ;;
+esac
+#!/bin/bash
+-------------------------------------------------------------------
+# 20) Build a simple calculator that performs basic arithmetic operations.
+simple_calculator() {
+    echo "Simple Calculator"
+    echo "Enter first number:"
+    read num1
+    echo "Enter second number:"
+    read num2
+
+    echo "Select operation:"
+    echo "1. Addition"
+    echo "2. Subtraction"
+    echo "3. Multiplication"
+    echo "4. Division"
+    read operation
+
+    case $operation in
+        1) result=$((num1 + num2))
+           echo "Result: $result" ;;
+        2) result=$((num1 - num2))
+           echo "Result: $result" ;;
+        3) result=$((num1 * num2))
+           echo "Result: $result" ;;
+        4) if ((num2 == 0)); then
+               echo "Cannot divide by zero."
+           else
+               result=$(bc <<< "scale=2; $num1 / $num2")
+               echo "Result: $result"
+           fi ;;
+        *) echo "Invalid operation." ;;
+    esac
+}
+-------------------------------------------------------------------
+# 21) Check if a file is writable.
+check_file_writability() {
+    if [ -w "$1" ]; then
+        echo "File is writable."
+    else
+        echo "File is not writable."
+    fi
+}
+-------------------------------------------------------------------
+# 22) Find and display the second largest number in an array.
+find_second_largest() {
+    arr=("$@")
+    largest=${arr[0]}
+    second_largest=${arr[0]}
+
+    for num in "${arr[@]}"; do
+        if ((num > largest)); then
+            second_largest=$largest
+            largest=$num
+        elif ((num > second_largest && num != largest)); then
+            second_largest=$num
+        fi
+    }
+
+    echo "Second largest number is $second_largest"
+}
+-------------------------------------------------------------------
+# 23) Count the number of words in a text file.
+count_words_in_file() {
+    echo "Enter the path of the text file:"
+    read file_path
+
+    if [ -f "$file_path" ]; then
+        word_count=$(wc -w < "$file_path")
+        echo "Word count in the file: $word_count"
+    else
+        echo "File not found."
+    fi
+}
+-------------------------------------------------------------------
+# 24) Generate a list of prime numbers up to a specified limit.
+generate_primes() {
+    echo "Enter the upper limit for prime numbers:"
+    read limit
+
+    for ((num = 2; num <= limit; num++)); do
+        is_prime=1
+        for ((i = 2; i <= num / 2; i++)); do
+            if ((num % i == 0)); then
+                is_prime=0
+                break
+            fi
+        done
+
+        if ((is_prime == 1)); then
+            echo -n "$num "
+        fi
+    done
+    echo
+}
+-------------------------------------------------------------------
+# 25) Determine the common elements between two arrays.
+find_common_elements() {
+    echo "Enter elements of the first array (space-separated):"
+    read -a array1
+    echo "Enter elements of the second array (space-separated):"
+    read -a array2
+
+    common=()
+    for item1 in "${array1[@]}"; do
+        for item2 in "${array2[@]}"; do
+            if [ "$item1" == "$item2" ]; then
+                common+=("$item1")
+            fi
+        done
+    }
+
+    echo "Common elements: ${common[*]}"
+}
+
+
+-------------------------------------------------------------------
+
+# 26) Convert a decimal number to binary.
+decimal_to_binary() {
+    echo "Enter a decimal number:"
+    read decimal
+    binary=$(echo "obase=2; $decimal" | bc)
+    echo "Binary representation: $binary"
+}
+-------------------------------------------------------------------
+# 27) Calculate the area of common geometric shapes based on user input.
+calculate_area() {
+    echo "Select a geometric shape:"
+    echo "1. Circle"
+    echo "2. Triangle"
+    echo "3. Rectangle"
+    read shape
+
+    case $shape in
+        1) echo "Enter the radius of the circle:"
+           read radius
+           area=$(bc -l <<< "3.14159 * $radius * $radius")
+           echo "Area of the circle: $area" ;;
+        2) echo "Enter the base and height of the triangle:"
+           read base height
+           area=$(bc -l <<< "0.5 * $base * $height")
+           echo "Area of the triangle: $area" ;;
+        3) echo "Enter the length and width of the rectangle:"
+           read length width
+           area=$(bc -l <<< "$length * $width")
+           echo "Area of the rectangle: $area" ;;
+        *) echo "Invalid choice." ;;
+    esac
+}
+-------------------------------------------------------------------
+# 28) Generate a list of Armstrong numbers within a given range.
+generate_armstrong_numbers() {
+    echo "Enter the lower and upper limits for Armstrong numbers:"
+    read lower_limit upper_limit
+
+    for ((num = lower_limit; num <= upper_limit; num++)); do
+        sum=0
+        temp=$num
+        num_of_digits=${#num}
+
+        while [ $temp -gt 0 ]; do
+            digit=$((temp % 10))
+            sum=$((sum + digit ** num_of_digits))
+            temp=$((temp / 10))
+        done
+
+        if [ $num -eq $sum ]; then
+            echo -n "$num "
+        fi
+    done
+    echo
+}
+-------------------------------------------------------------------
+# 29) List files by their size in a directory.
+list_files_by_size() {
+    echo "Enter a directory path:"
+    read directory
+
+    if [ -d "$directory" ]; then
+        ls -Slh "$directory"
+    else
+        echo "Directory not found."
+    fi
+}
+-------------------------------------------------------------------
+# 30) Create a script that simulates a basic ATM machine for withdrawals and deposits.
+basic_atm() {
+    balance=1000
+    while true; do
+        echo "ATM Menu:"
+        echo "1. Check Balance"
+        echo "2. Deposit"
+        echo "3. Withdraw"
+        echo "4. Exit"
+        read choice
+
+        case $choice in
+            1) echo "Your balance is: $balance" ;;
+            2) echo "Enter the amount to deposit:"
+               read deposit
+               balance=$((balance + deposit))
+               echo "Deposited $deposit. Your new balance is: $balance" ;;
+            3) echo "Enter the amount to withdraw:"
+               read withdraw
+               if ((withdraw <= balance)); then
+                   balance=$((balance - withdraw))
+                   echo "Withdrawn $withdraw. Your new balance is: $balance"
+               else
+                   echo "Insufficient funds."
+               fi ;;
+            4) echo "Exiting ATM. Goodbye!"
+               exit ;;
+            *) echo "Invalid choice." ;;
+        esac
+    done
+}
+
