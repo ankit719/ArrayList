@@ -1,0 +1,162 @@
+/*[example of exception handling ]*/
+public class Demo{
+	public static void main(String arg[]) {
+		String str=null;
+		try {
+			//int len=str.length();
+			if(str==null) {
+				throw new Exception("string containing null");
+			}
+			int len=str.length();
+			System.out.println("length="+len);
+			System.out.println("End of try block");
+		}catch(Exception e){ //NullPointerException e
+			System.out.println(e.getMessage());
+			System.out.println(e.getStackTrace());
+		}
+		System.out.println("End of main block");
+	}
+}
+-----------------------------------------------------------
+/*[multiple catch block are valid but codition they are written in proper herarchy if not program show compile time error]*/
+public class Demo{
+	public static void main(String arg[]) {
+		String str=null;
+		try {
+			//int len=str.length();
+			int a=3/0;
+			/*if() {
+				throw new NullPointerException("string containing null");
+			}*/
+			//int len=str.length();
+			System.out.println("length="+a);
+			System.out.println("End of try block");
+		}catch(ClassCastException e){ //NullPointerException e,exception e,Throwable e
+			System.out.println("Excep");
+			System.out.println(e.getMessage());
+			System.out.println(e.getStackTrace());
+		}
+		catch(NullPointerException e){ //NullPointerException e,exception e,Throwable e
+			System.out.println("NullPointer");
+			System.out.println(e.getMessage());
+			System.out.println(e.getStackTrace());
+		}
+		catch(Exception e){ //NullPointerException e,exception e,Throwable e
+			System.out.println("Excep");
+			System.out.println(e.getMessage());
+			System.out.println(e.getStackTrace());
+		}
+		catch(Throwable e){ //NullPointerException e,exception e,Throwable e
+			System.out.println("Throw");
+			System.out.println(e.getMessage());
+			System.out.println(e.getStackTrace());
+		}
+		System.out.println("End of main block");
+	}
+}
+--------------------------------------------------------------------
+/*[finally block example without try finally show error]*/
+public class Demo{
+	public static void main(String arg[]) {
+		String str=null;
+		try {
+			int a=3/0;
+			System.out.println("length="+a);
+			System.out.println("End of try block");
+		}catch(Exception e){ //NullPointerException e,exception e,Throwable e
+			System.out.println("Excep");
+			//System.exit(0);
+			System.out.println(e.getMessage());
+			System.out.println(e.getStackTrace());
+		}
+		finally {
+			System.out.println("inside finally");
+		}
+		System.out.println("End of main block");
+		
+	}
+}
+----------------------------------------------------------------------------
+/*[multitple finally block is possiable but only with try block]*/
+public class Demo{
+	public static void main(String arg[]) {
+		String str=null;
+		try {
+			int a=3/0;
+			System.out.println("length="+a);
+			System.out.println("End of try block");
+		}catch(Exception e){ //NullPointerException e,exception e,Throwable e
+			System.out.println("Excep");
+			//System.exit(0);
+			System.out.println(e.getMessage());
+			System.out.println(e.getStackTrace());
+		}
+		finally {
+			System.out.println("inside finally");
+			//System.exit(0);
+		}
+		try {
+			
+		}
+		finally {
+			System.out.println("inside finally2");
+		}
+		System.out.println("End of main block");
+		
+	}
+}
+-----------------------------------------------------------------------------
+
+public class Demo{
+	void disp(int m) throws Exception
+	{
+		if(m<=0)
+		{
+			throw new Exception("negativee no. not allowed");
+		}
+	}
+	int pro(int k) {
+		try {
+			disp(k);
+			return 1;
+		}
+		catch(Exception e) // Exception e = new Exception("negativee no. not allowed");
+		{
+			return 2;
+		}
+		
+		finally 
+		{
+			return 3;
+		}
+	}
+	public static void main(String arg[]) {
+		Demo ob=new Demo();
+		System.out.println(ob.pro(-10));
+	}
+}
+----------------------------------------------------------------------------
+/*[example of user define exception]*/
+class A{
+	public int sqr(int x)throws MyException {
+		if(x<=0) {
+			throw new MyException("send positive number");
+		}
+		return x*x;
+	}
+}
+class MyException extends Exception{
+	MyException(String ae){
+		super(ae);
+	}
+}
+public class Demo{
+	public static void main(String arg[]) {
+		try {
+			A ob=new A();
+			System.out.println(ob.sqr(-10));
+		}catch(MyException ae){
+			System.out.println(ae);
+		}
+	}
+}
